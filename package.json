@@ -1,0 +1,17 @@
+{
+  "name": "ntask-web",
+  "version": "1.0.0",
+  "description": "Versão web gerenciador de tarefas",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && node index.js",
+    "build": "browserify src/*.js -t babelify -o public/js/app.js"
+  },
+  "author": "Caio Ribeiro Pereira",
+  "dependencies": {
+    "babelify": "^6.3.0",
+    "browser-request": "^0.3.3",
+    "browserify": "^11.2.0",
+    "express": "^4.13.3"
+  }
+}
