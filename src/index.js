@@ -1,8 +1,19 @@
-var Auth = require("./auth.js");
+var ListTasksTemplate = require("./templates/listTasks.js");
+var NewTaskTemplate = require("./templates/newTask.js");
+var SigninTemplate = require("./templates/signin.js");
+var SignupTemplate = require("./templates/signup.js");
+const TASKS = [
+  {id: 1, title: "Trabalhar", done: false},
+  {id: 2, title: "Durmir", done: true},
+];
 
-var auth = new Auth("caio@mail.com", "12345");
+window.onload = () => {
 
-auth.getToken((body) => {
-  console.log("TOKEN!");
-  alert(JSON.stringify(body));
-});
+  var main = document.querySelector("main");
+  // main.innerHTML = ListTasksTemplate.render(TASKS);
+  main.innerHTML = NewTaskTemplate.render();
+  // main.innerHTML = SigninTemplate.render();
+  // main.innerHTML = SignupTemplate.render();
+
+
+};

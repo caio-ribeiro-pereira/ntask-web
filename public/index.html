@@ -5,24 +5,20 @@
     <title>NTask - Gerenciador de tarefas</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="css/ionic.min.css">
+    <link rel="stylesheet" href="css/ionicons.min.css">
     <script src="js/app.js" async defer></script>
   </head>
   <body>
     <header class="bar bar-header bar-calm">
       <h1 class="title">NTask</h1>
+      <button class="pull-right button button-clear">
+        <i class="ion-plus-round"></i>
+      </button>
     </header>
-    <main class="scroll-content ionic-scroll">
-      <div class="content overflow-scroll has-header">
-        <ul class="list">
-          <li class="item item-checkbox item-button-right">
-            <label class="checkbox">
-              <input type="checkbox">
-            </label>
-            Trabalhar
-            <button class="button button-assertive">X</button>
-          </li>
-        </ul>
-      </div>
-    </main>
+    <div class="scroll-content ionic-scroll">
+      <main class="content overflow-scroll has-header">
+        <h4 class="text-center">Carregando...</h4>
+      </main>
+    </div>
   </body>
 </html>

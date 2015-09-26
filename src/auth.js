@@ -16,8 +16,6 @@ class Auth {
         password: this.password
       }
     }, (err, resp, body) => {
-      console.log(err);
-      console.log(resp);
       done(body);
     });
   }

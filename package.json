@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm run build && npm run server",
     "server": "http-server public -p 3001",
-    "build": "browserify src/*.js -t babelify -o public/js/app.js"
+    "build": "browserify src -t babelify -o public/js/app.js"
   },
   "author": "Caio Ribeiro Pereira",
   "dependencies": {
