@@ -1,8 +1,9 @@
 exports.render = () => {
   return `<form>
     <div class="list">
-      <label class="item item-input">
-        <input type="text" placeholder="Nome da tarefa">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Tarefa</span>
+        <input type="text" data-task-title>
       </label>
     </div>
     <div class="padding">
