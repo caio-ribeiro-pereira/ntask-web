@@ -1,8 +1,8 @@
-let ListTasksTemplate = require("./templates/listTasks.js");
-let NewTaskTemplate = require("./templates/newTask.js");
+let TasksTemplate = require("./templates/tasks.js");
+let TaskFormTemplate = require("./templates/taskForm.js");
 let SigninTemplate = require("./templates/signin.js");
 let SignupTemplate = require("./templates/signup.js");
-let ShowUserTemplate = require("./templates/showUser.js");
+let UserFormTemplate = require("./templates/userForm.js");
 const TASKS = [
   {id: 1, title: "Trabalhar", done: false},
   {id: 2, title: "Durmir", done: true},
@@ -13,10 +13,10 @@ const USER = {name: "Caio", email: "caio@mail.com"};
 window.onload = () => {
 
   let main = document.querySelector("main");
-  // main.innerHTML = ListTasksTemplate.render(TASKS);
-  // main.innerHTML = NewTaskTemplate.render();
+  // main.innerHTML = TasksTemplate.render(TASKS);
+  // main.innerHTML = TaskFormTemplate.render();
   // main.innerHTML = SigninTemplate.render();
   // main.innerHTML = SignupTemplate.render();
-  main.innerHTML = ShowUserTemplate.render(USER);
+  main.innerHTML = UserFormTemplate.render(USER);
 
 };
