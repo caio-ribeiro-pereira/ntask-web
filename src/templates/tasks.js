@@ -1,12 +1,13 @@
 var renderTasks = (tasks) => {
   return tasks.map((task) => {
     return `
-      <li data-task="${task.id}"
-          class="item item-checkbox item-button-right">
-        <label class="checkbox">
-          <input type="checkbox"${task.done?' checked':''}>
-        </label>
-        ${task.title}
+      <li data-task="${task.id}" class="item item-button-right">
+        <div class="item-checkbox">
+          <label class="checkbox">
+            <input type="checkbox"${task.done?' checked':''}>
+          </label>
+          ${task.title}
+        </div>
         <button class="button button-assertive">
           <i class="ion-trash-a"></i>
         </button>
@@ -16,5 +17,8 @@ var renderTasks = (tasks) => {
 };
 
 exports.render = (tasks) => {
-  return `<ul class="list">${renderTasks(tasks)}</ul>`;
+  let taskList = renderTasks(tasks);
+  if (taskList)
+    return `<ul class="list">${taskList}</ul>`;
+  return `<h4 class="text-center">Nenhuma tarefa ainda</h4>`;
 };
