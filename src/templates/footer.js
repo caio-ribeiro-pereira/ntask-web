@@ -1,15 +1,14 @@
-exports.render = () => {
+exports.render = (path) => {
+  let activeTasks = path === "tasks" ? "active" : "";
+  let activeTaskForm = path === "taskForm" ? "active" : "";
   return `
     <div class="tabs-striped tabs-color-calm">
       <div class="tabs">
-        <a class="tab-item active" data-render="tasks">
+        <a data-path="tasks" class="tab-item ${activeTasks}">
           <i class="icon ion-home"></i>
         </a>
-        <a class="tab-item" data-render="taskForm">
+        <a data-path="taskForm" class="tab-item ${activeTaskForm}">
           <i class="icon ion-compose"></i>
-        </a>
-        <a class="tab-item" data-render="userForm">
-          <i class="icon ion-gear-a"></i>
         </a>
       </div>
     </div>`;

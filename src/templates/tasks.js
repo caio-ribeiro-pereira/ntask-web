@@ -1,4 +1,4 @@
-var renderTasks = (tasks) => {
+let renderTasks = (tasks) => {
   return tasks.map((task) => {
     return `
       <li data-task="${task.id}" class="item item-button-right">

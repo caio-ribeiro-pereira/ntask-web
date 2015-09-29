@@ -1,29 +1,37 @@
-import Home from "./components/home.js";
+import Tasks from "./components/tasks.js";
+import TaskForm from "./components/taskForm.js";
 import Signin from "./components/signin.js";
+import Menu from "./components/menu.js";
 
 class App {
 
-  constructor(main) {
-    this.main = main;
-    this.signin = new Signin(main);
-    this.home = new Home(main);
+  constructor(body, footer) {
+    this.body = body;
+    this.footer = footer;
+    this.signin = new Signin(body);
+    this.tasks = new Tasks(body);
+    this.taskForm = new TaskForm(body);
+    this.menu = new Menu(footer);
   }
 
   init() {
-    this.signin.init();
-
+    this.signin.render();
     this.addEventListener();
   }
 
   addEventListener() {
-    let self = this;
     this.signin.on("login", (token) => {
       localStorage.setItem("token", `JWT ${token}`);
-      self.home.init();
-    });
+      this.menu.render("tasks");
+      this.tasks.render();
+    }.bind(this));
     this.signin.on("error", (err) => {
       alert("Erro de autenticação");
     });
+    this.menu.on("click", (path) => {
+      this.menu.render(path);
+      this[path].render();
+    }.bind(this));
   }
 }
 

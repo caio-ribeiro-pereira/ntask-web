@@ -8,39 +8,35 @@ class Signin extends NTask {
     this.body = body;
   }
 
-  init() {
-    this.render();
-    this.addEventListener();
-  }
-
   render() {
     this.body.innerHTML = Template.render();
     this.body.querySelector("[data-email]").focus();
+    this.addEventListener();
   }
 
   addEventListener() {
-    let self = this;
     let form = this.body.querySelector("form");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       let email = e.target.querySelector("[data-email]");
       let password = e.target.querySelector("[data-password]");
-      self.request({
+      let opts = {
         method: "POST",
-        url: `${self.URL}/token`,
+        url: `${this.URL}/token`,
         json: true,
         body: {
           email: email.value,
           password: password.value
         }
-      }, (err, resp, data) => {
+      };
+      this.request(opts, (err, resp, data) => {
         if (err) {
-          self.emit("error", err);
+          this.emit("error", err);
         } else {
-          self.emit("login", data.token);
+          this.emit("login", data.token);
         }
       });
-    });
+    }.bind(this));
   }
 }
 
