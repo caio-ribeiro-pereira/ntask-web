@@ -29,6 +29,13 @@ class App {
       this.menu.render(path);
       this[path].render();
     }.bind(this));
+    this.taskForm.on("error", (err) => {
+      alert("Erro no cadastro da tarefa");
+    });
+    this.taskForm.on("submit", () => {
+      this.menu.render("tasks");
+      this.tasks.render();
+    });
   }
 }
 

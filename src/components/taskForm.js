@@ -8,9 +8,33 @@ class TaskForm extends NTask {
   }
   render() {
     this.body.innerHTML = Template.render();
+    this.body.querySelector("[data-task]").focus();
+    this.addEventListener();
   }
   addEventListener() {
-    // eventos
+    const form = this.body.querySelector("form");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const task = e.target.querySelector("[data-task]");
+      const opts = {
+        method: "POST",
+        url: `${this.URL}/tasks`,
+        json: true,
+        headers: {
+          authorization: localStorage.getItem("token")
+        },
+        body: {
+          title: task.value
+        }
+      };
+      this.request(opts, (err, resp, data) => {
+        if (err) {
+          this.emit("error", err);
+        } else {
+          this.emit("submit");
+        }
+      });
+    }.bind(this));
   }
 }
 

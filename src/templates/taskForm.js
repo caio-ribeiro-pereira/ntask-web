@@ -3,7 +3,7 @@ exports.render = () => {
     <div class="list">
       <label class="item item-input item-stacked-label">
         <span class="input-label">Tarefa</span>
-        <input type="text" data-task-title>
+        <input type="text" data-task>
       </label>
     </div>
     <div class="padding">
