@@ -3,14 +3,12 @@ import Template from "../templates/tasks.js";
 import Loading from "../templates/loading.js";
 
 class Tasks extends NTask {
-
   constructor(body) {
     super();
     this.body = body;
   }
-
   render() {
-    let opts = {
+    const opts = {
       method: "GET",
       url: `${this.URL}/tasks`,
       json: true,
@@ -28,7 +26,6 @@ class Tasks extends NTask {
       }
     }.bind(this));
   }
-
   addEventListener() {
     // eventos
   }

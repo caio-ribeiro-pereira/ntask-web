@@ -1,4 +1,4 @@
-exports.render = (user) => {
+exports.render = user => {
   return `<form>
     <div class="list">
       <label class="item item-input item-stacked-label">

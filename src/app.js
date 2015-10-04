@@ -4,7 +4,6 @@ import Signin from "./components/signin.js";
 import Menu from "./components/menu.js";
 
 class App {
-
   constructor(body, footer) {
     this.body = body;
     this.footer = footer;
@@ -13,12 +12,10 @@ class App {
     this.taskForm = new TaskForm(body);
     this.menu = new Menu(footer);
   }
-
   init() {
     this.signin.render();
     this.addEventListener();
   }
-
   addEventListener() {
     this.signin.on("login", (token) => {
       localStorage.setItem("token", `JWT ${token}`);

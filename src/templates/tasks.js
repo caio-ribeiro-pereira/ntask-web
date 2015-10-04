@@ -1,5 +1,5 @@
-let renderTasks = (tasks) => {
-  return tasks.map((task) => {
+const renderTasks = tasks => {
+  return tasks.map(task => {
     return `
       <li data-task="${task.id}" class="item item-button-right">
         <div class="item-checkbox">
@@ -16,9 +16,10 @@ let renderTasks = (tasks) => {
   }).join("");
 };
 
-exports.render = (tasks) => {
-  let taskList = renderTasks(tasks);
-  if (taskList)
+exports.render = tasks => {
+  const taskList = renderTasks(tasks);
+  if (taskList) {
     return `<ul class="list">${taskList}</ul>`;
+  }
   return `<h4 class="text-center">Nenhuma tarefa ainda</h4>`;
 };
