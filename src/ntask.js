@@ -1,9 +1,10 @@
-import EventEmitter from "events";
+import TinyEmitter from "tiny-emitter";
+import Request from "browser-request";
 
-class NTask extends EventEmitter {
+class NTask extends TinyEmitter {
   constructor() {
     super();
-    this.request = require("browser-request");
+    this.request = Request;
     this.URL = "http://localhost:3000";
   }
 }
