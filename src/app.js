@@ -1,5 +1,6 @@
 import Tasks from "./components/tasks.js";
 import TaskForm from "./components/taskForm.js";
+import User from "./components/user.js";
 import Signin from "./components/signin.js";
 import Menu from "./components/menu.js";
 
@@ -10,6 +11,7 @@ class App {
     this.signin = new Signin(body);
     this.tasks = new Tasks(body);
     this.taskForm = new TaskForm(body);
+    this.user = new User(body);
     this.menu = new Menu(footer);
   }
   init() {
@@ -30,7 +32,7 @@ class App {
       this[path].render();
     }.bind(this));
     this.taskForm.on("error", (err) => {
-      alert("Erro no cadastro da tarefa");
+      alert("Erro ao cadastrar tarefa");
     });
     this.taskForm.on("submit", () => {
       this.menu.render("tasks");

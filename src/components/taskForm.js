@@ -28,8 +28,8 @@ class TaskForm extends NTask {
         }
       };
       this.request(opts, (err, resp, data) => {
-        if (err) {
-          this.emit("error", err);
+        if (err || resp.status === 412) {
+          this.emit("error");
         } else {
           this.emit("submit");
         }
