@@ -1,14 +1,14 @@
 import NTask from "../ntask.js";
-import Template from "../templates/taskForm.js";
+import Template from "../templates/signup.js";
 
-class TaskForm extends NTask {
+class Signup extends NTask {
   constructor(body) {
     super();
     this.body = body;
   }
   render() {
     this.body.innerHTML = Template.render();
-    this.body.querySelector("[data-task]").focus();
+    this.body.querySelector("[data-name]").focus();
     this.addEventListener();
   }
   addEventListener() {
@@ -18,27 +18,28 @@ class TaskForm extends NTask {
     const form = self.body.querySelector("form");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const task = e.target.querySelector("[data-task]");
+      const name = e.target.querySelector("[data-name]");
+      const email = e.target.querySelector("[data-email]");
+      const password = e.target.querySelector("[data-password]");
       const opts = {
         method: "POST",
-        url: `${self.URL}/tasks`,
+        url: `${self.URL}/users`,
         json: true,
-        headers: {
-          authorization: localStorage.getItem("token")
-        },
         body: {
-          title: task.value
+          name: name.value,
+          email: email.value,
+          password: password.value
         }
       };
       self.request(opts, (err, resp, data) => {
         if (err || resp.status === 412) {
-          self.emit("error");
+          self.emit("error", err);
         } else {
-          self.emit("submit");
+          self.emit("signup", data);
         }
       });
     });
   }
 }
 
-module.exports = TaskForm;
+module.exports = Signup;

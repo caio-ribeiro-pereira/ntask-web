@@ -1,17 +1,17 @@
 exports.render = path => {
-  const activeTasks = path === "tasks" ? "active" : "";
-  const activeTaskForm = path === "taskForm" ? "active" : "";
-  const activeUser = path === "user" ? "active" : "";
+  let isTasks = path === "tasks" ? "active" : "";
+  let isTaskForm = path === "taskForm" ? "active" : "";
+  let isUser = path === "user" ? "active" : "";
   return `
     <div class="tabs-striped tabs-color-calm">
       <div class="tabs">
-        <a data-path="tasks" class="tab-item ${activeTasks}">
+        <a data-path="tasks" class="tab-item ${isTasks}">
           <i class="icon ion-home"></i>
         </a>
-        <a data-path="taskForm" class="tab-item ${activeTaskForm}">
+        <a data-path="taskForm" class="tab-item ${isTaskForm}">
           <i class="icon ion-compose"></i>
         </a>
-        <a data-path="user" class="tab-item ${activeUser}">
+        <a data-path="user" class="tab-item ${isUser}">
           <i class="icon ion-person"></i>
         </a>
       </div>

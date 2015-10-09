@@ -11,14 +11,17 @@ class Menu extends NTask {
     this.addEventListener();
   }
   addEventListener() {
-    const links = this.body.querySelectorAll("a");
+    this.linksClick(this);
+  }
+  linksClick(self) {
+    const links = self.body.querySelectorAll("a");
     for(let i = 0, max = links.length; i < max; i++) {
       links[i].addEventListener("click", (e) => {
         e.preventDefault();
         const link = e.target.parentElement;
         const path = link.getAttribute("data-path");
-        this.emit("click", path);
-      }.bind(this));
+        self.emit("click", path);
+      });
     }
   }
 }

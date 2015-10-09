@@ -12,28 +12,39 @@ class Signin extends NTask {
     this.addEventListener();
   }
   addEventListener() {
-    const form = this.body.querySelector("form");
+    this.formSubmit(this);
+    this.signupClick(this);
+  }
+  formSubmit(self) {
+    const form = self.body.querySelector("form");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const email = e.target.querySelector("[data-email]");
       const password = e.target.querySelector("[data-password]");
       const opts = {
         method: "POST",
-        url: `${this.URL}/token`,
+        url: `${self.URL}/token`,
         json: true,
         body: {
           email: email.value,
           password: password.value
         }
       };
-      this.request(opts, (err, resp, data) => {
-        if (err) {
-          this.emit("error", err);
+      self.request(opts, (err, resp, data) => {
+        if (err || resp.status === 401) {
+          self.emit("error", err);
         } else {
-          this.emit("login", data.token);
+          self.emit("signin", data.token);
         }
       });
-    }.bind(this));
+    });
+  }
+  signupClick(self) {
+    const signup = self.body.querySelector("[data-signup]");
+    signup.addEventListener("click", (e) => {
+      e.preventDefault();
+      self.emit("signup");
+    });
   }
 }
 

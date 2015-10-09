@@ -2,6 +2,7 @@ import Tasks from "./components/tasks.js";
 import TaskForm from "./components/taskForm.js";
 import User from "./components/user.js";
 import Signin from "./components/signin.js";
+import Signup from "./components/signup.js";
 import Menu from "./components/menu.js";
 
 class App {
@@ -9,6 +10,7 @@ class App {
     this.body = body;
     this.footer = footer;
     this.signin = new Signin(body);
+    this.signup = new Signup(body);
     this.tasks = new Tasks(body);
     this.taskForm = new TaskForm(body);
     this.user = new User(body);
@@ -19,24 +21,54 @@ class App {
     this.addEventListener();
   }
   addEventListener() {
-    this.signin.on("login", (token) => {
+    this.signinEvents(this);
+    this.signupEvents(this);
+    this.tasksEvents(this);
+    this.taskFormEvents(this);
+    this.userEvents(this);
+    this.menuEvents(this);
+  }
+  signinEvents(self) {
+    self.signin.on("error", () => alert("Erro de autenticação"));
+    self.signin.on("signin", (token) => {
       localStorage.setItem("token", `JWT ${token}`);
-      this.menu.render("tasks");
-      this.tasks.render();
-    }.bind(this));
-    this.signin.on("error", (err) => {
-      alert("Erro de autenticação");
+      self.menu.render("tasks");
+      self.tasks.render();
     });
-    this.menu.on("click", (path) => {
-      this.menu.render(path);
-      this[path].render();
-    }.bind(this));
-    this.taskForm.on("error", (err) => {
-      alert("Erro ao cadastrar tarefa");
+    self.signin.on("signup", () => self.signup.render());
+  }
+  signupEvents(self) {
+    self.signup.on("error", () => alert("Erro no cadastro"));
+    self.signup.on("signup", (user) => {
+      alert(`${user.name} você foi cadastrado com sucesso!`);
+      self.signin.render();
     });
-    this.taskForm.on("submit", () => {
-      this.menu.render("tasks");
-      this.tasks.render();
+  }
+  tasksEvents(self) {
+    self.tasks.on("error", () => alert("Erro ao listar tarefas"));
+    self.tasks.on("remove-error", () => alert("Erro ao excluir"));
+    self.tasks.on("update-error", () => alert("Erro ao atualizar"));
+    self.tasks.on("remove", () => self.tasks.render());
+    self.tasks.on("update", () => self.tasks.render());
+  }
+  taskFormEvents(self) {
+    self.taskForm.on("error", () => alert("Erro ao cadastrar tarefa"));
+    self.taskForm.on("submit", () => {
+      self.menu.render("tasks");
+      self.tasks.render();
+    });
+  }
+  userEvents(self) {
+    self.user.on("error", () => alert("Erro ao excluir conta"));
+    self.user.on("remove-account", () => {
+      alert("Que pena! Sua conta foi excluída.");
+      self.signin.render();
+    });
+  }
+  menuEvents(self) {
+    self.menu.on("click", (path) => {
+      self.menu.render(path);
+      self[path].render();
     });
   }
 }

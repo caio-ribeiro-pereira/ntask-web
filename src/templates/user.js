@@ -10,7 +10,8 @@ exports.render = user => {
     </label>
   </div>
   <div class="padding">
-    <button class="button button-assertive button-block">
+    <button data-remove-account
+      class="button button-assertive button-block">
       <i class="ion-trash-a"></i> Excluir conta
     </button>
   </div>`;

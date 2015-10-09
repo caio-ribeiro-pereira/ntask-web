@@ -8,26 +8,52 @@ class User extends NTask {
     this.body = body;
   }
   render() {
+    this.renderUserData(this);
+  }
+  addEventListener() {
+    this.userCancelClick(this);
+  }
+  renderUserData(self) {
     const opts = {
       method: "GET",
-      url: `${this.URL}/user`,
+      url: `${self.URL}/user`,
       json: true,
       headers: {
         authorization: localStorage.getItem("token")
       }
     };
-    this.body.innerHTML = Loading.render();
-    this.request(opts, (err, resp, data) => {
+    self.body.innerHTML = Loading.render();
+    self.request(opts, (err, resp, data) => {
       if (err) {
-        this.emit("error", err);
+        self.emit("error", err);
       } else {
-        this.body.innerHTML = Template.render(data);
-        this.addEventListener();
+        self.body.innerHTML = Template.render(data);
+        self.addEventListener();
       }
-    }.bind(this));
+    });
   }
-  addEventListener() {
-    // eventos
+  userCancelClick(self) {
+    const button = self.body.querySelector("[data-remove-account]");
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (confirm("Tem certeza que deseja excluir sua conta?")) {
+        const opts = {
+          method: "DELETE",
+          url: `${self.URL}/user`,
+          json: true,
+          headers: {
+            authorization: localStorage.getItem("token")
+          }
+        };
+        self.request(opts, (err, resp, data) => {
+          if (err || resp.status === 412) {
+            self.emit("error", err);
+          } else {
+            self.emit("remove-account");
+          }
+        });
+      }
+    });
   }
 }
 
