@@ -1,7 +1,7 @@
 {
   "name": "ntask-web",
   "version": "1.0.0",
-  "description": "Versão web gerenciador de tarefas",
+  "description": "Versão web do gerenciador de tarefas",
   "scripts": {
     "start": "npm run build && npm run server",
     "server": "http-server public -p 3001",
