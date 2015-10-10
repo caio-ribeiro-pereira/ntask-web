@@ -59,9 +59,12 @@ class App {
     });
   }
   userEvents(self) {
-    self.user.on("error", () => alert("Erro ao excluir conta"));
+    self.user.on("error", () => alert("Erro carregar usuário"));
+    self.user.on("remove-error", () => alert("Erro ao excluir conta"));
     self.user.on("remove-account", () => {
       alert("Que pena! Sua conta foi excluída.");
+      localStorage.clear();
+      self.menu.clear();
       self.signin.render();
     });
   }
@@ -70,6 +73,11 @@ class App {
       self.menu.render(path);
       self[path].render();
     });
+    self.menu.on("logout", () => {
+      localStorage.clear();
+      self.menu.clear();
+      self.signin.render();
+    })
   }
 }
 

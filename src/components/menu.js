@@ -10,11 +10,15 @@ class Menu extends NTask {
     this.body.innerHTML = Template.render(path);
     this.addEventListener();
   }
-  addEventListener() {
-    this.linksClick(this);
+  clear() {
+    this.body.innerHTML = "";
   }
-  linksClick(self) {
-    const links = self.body.querySelectorAll("a");
+  addEventListener() {
+    this.pathsClick(this);
+    this.logoutClick(this);
+  }
+  pathsClick(self) {
+    const links = self.body.querySelectorAll("[data-path]");
     for(let i = 0, max = links.length; i < max; i++) {
       links[i].addEventListener("click", (e) => {
         e.preventDefault();
@@ -23,6 +27,13 @@ class Menu extends NTask {
         self.emit("click", path);
       });
     }
+  }
+  logoutClick(self) {
+    const link = self.body.querySelector("[data-logout]");
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      self.emit("logout");
+    })
   }
 }
 

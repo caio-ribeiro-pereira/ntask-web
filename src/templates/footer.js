@@ -14,6 +14,9 @@ exports.render = path => {
         <a data-path="user" class="tab-item ${isUser}">
           <i class="icon ion-person"></i>
         </a>
+        <a data-logout class="tab-item">
+          <i class="icon ion-android-exit"></i>
+        </a>
       </div>
     </div>`;
 };

@@ -45,12 +45,11 @@ class Tasks extends NTask {
           url: `${self.URL}/tasks/${id}`,
           headers: {
             authorization: localStorage.getItem("token"),
-            accept: "application/json",
-            "content-type": "application/json"
+            "Content-Type": "application/json"
           },
-          body: {
+          body: JSON.stringify({
             done: !done
-          }
+          })
         };
         self.request(opts, (err, resp, data) => {
           if (err || resp.status === 412) {

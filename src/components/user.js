@@ -24,7 +24,7 @@ class User extends NTask {
     };
     self.body.innerHTML = Loading.render();
     self.request(opts, (err, resp, data) => {
-      if (err) {
+      if (err || resp.status === 412) {
         self.emit("error", err);
       } else {
         self.body.innerHTML = Template.render(data);
@@ -40,14 +40,13 @@ class User extends NTask {
         const opts = {
           method: "DELETE",
           url: `${self.URL}/user`,
-          json: true,
           headers: {
             authorization: localStorage.getItem("token")
           }
         };
         self.request(opts, (err, resp, data) => {
           if (err || resp.status === 412) {
-            self.emit("error", err);
+            self.emit("remove-error", err);
           } else {
             self.emit("remove-account");
           }
