@@ -7,8 +7,6 @@ import Menu from "./components/menu.js";
 
 class App {
   constructor(body, footer) {
-    this.body = body;
-    this.footer = footer;
     this.signin = new Signin(body);
     this.signup = new Signup(body);
     this.tasks = new Tasks(body);
