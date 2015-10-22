@@ -12,16 +12,16 @@ class TaskForm extends NTask {
     this.addEventListener();
   }
   addEventListener() {
-    this.formSubmit(this);
+    this.formSubmit();
   }
-  formSubmit(self) {
-    const form = self.body.querySelector("form");
+  formSubmit() {
+    const form = this.body.querySelector("form");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const task = e.target.querySelector("[data-task]");
       const opts = {
         method: "POST",
-        url: `${self.URL}/tasks`,
+        url: `${this.URL}/tasks`,
         json: true,
         headers: {
           authorization: localStorage.getItem("token")
@@ -30,11 +30,11 @@ class TaskForm extends NTask {
           title: task.value
         }
       };
-      self.request(opts, (err, resp, data) => {
+      this.request(opts, (err, resp, data) => {
         if (err || resp.status === 412) {
-          self.emit("error");
+          this.emit("error");
         } else {
-          self.emit("submit");
+          this.emit("submit");
         }
       });
     });

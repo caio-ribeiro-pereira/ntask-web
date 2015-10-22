@@ -14,25 +14,25 @@ class Menu extends NTask {
     this.body.innerHTML = "";
   }
   addEventListener() {
-    this.pathsClick(this);
-    this.logoutClick(this);
+    this.pathsClick();
+    this.logoutClick();
   }
-  pathsClick(self) {
-    const links = self.body.querySelectorAll("[data-path]");
+  pathsClick() {
+    const links = this.body.querySelectorAll("[data-path]");
     for(let i = 0, max = links.length; i < max; i++) {
       links[i].addEventListener("click", (e) => {
         e.preventDefault();
         const link = e.target.parentElement;
         const path = link.getAttribute("data-path");
-        self.emit("click", path);
+        this.emit("click", path);
       });
     }
   }
-  logoutClick(self) {
-    const link = self.body.querySelector("[data-logout]");
+  logoutClick() {
+    const link = this.body.querySelector("[data-logout]");
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      self.emit("logout");
+      this.emit("logout");
     })
   }
 }

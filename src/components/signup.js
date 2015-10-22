@@ -12,10 +12,10 @@ class Signup extends NTask {
     this.addEventListener();
   }
   addEventListener() {
-    this.formSubmit(this);
+    this.formSubmit();
   }
-  formSubmit(self) {
-    const form = self.body.querySelector("form");
+  formSubmit() {
+    const form = this.body.querySelector("form");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const name = e.target.querySelector("[data-name]");
@@ -23,7 +23,7 @@ class Signup extends NTask {
       const password = e.target.querySelector("[data-password]");
       const opts = {
         method: "POST",
-        url: `${self.URL}/users`,
+        url: `${this.URL}/users`,
         json: true,
         body: {
           name: name.value,
@@ -31,11 +31,11 @@ class Signup extends NTask {
           password: password.value
         }
       };
-      self.request(opts, (err, resp, data) => {
+      this.request(opts, (err, resp, data) => {
         if (err || resp.status === 412) {
-          self.emit("error", err);
+          this.emit("error", err);
         } else {
-          self.emit("signup", data);
+          this.emit("signup", data);
         }
       });
     });

@@ -19,62 +19,62 @@ class App {
     this.addEventListener();
   }
   addEventListener() {
-    this.signinEvents(this);
-    this.signupEvents(this);
-    this.tasksEvents(this);
-    this.taskFormEvents(this);
-    this.userEvents(this);
-    this.menuEvents(this);
+    this.signinEvents()
+    this.signupEvents();
+    this.tasksEvents();
+    this.taskFormEvents();
+    this.userEvents();
+    this.menuEvents();
   }
-  signinEvents(self) {
-    self.signin.on("error", () => alert("Erro de autenticação"));
-    self.signin.on("signin", (token) => {
+  signinEvents() {
+    this.signin.on("error", () => alert("Erro de autenticação"));
+    this.signin.on("signin", (token) => {
       localStorage.setItem("token", `JWT ${token}`);
-      self.menu.render("tasks");
-      self.tasks.render();
+      this.menu.render("tasks");
+      this.tasks.render();
     });
-    self.signin.on("signup", () => self.signup.render());
+    this.signin.on("signup", () => this.signup.render());
   }
-  signupEvents(self) {
-    self.signup.on("error", () => alert("Erro no cadastro"));
-    self.signup.on("signup", (user) => {
+  signupEvents() {
+    this.signup.on("error", () => alert("Erro no cadastro"));
+    this.signup.on("signup", (user) => {
       alert(`${user.name} você foi cadastrado com sucesso!`);
-      self.signin.render();
+      this.signin.render();
     });
   }
-  tasksEvents(self) {
-    self.tasks.on("error", () => alert("Erro ao listar tarefas"));
-    self.tasks.on("remove-error", () => alert("Erro ao excluir"));
-    self.tasks.on("update-error", () => alert("Erro ao atualizar"));
-    self.tasks.on("remove", () => self.tasks.render());
-    self.tasks.on("update", () => self.tasks.render());
+  tasksEvents() {
+    this.tasks.on("error", () => alert("Erro ao listar tarefas"));
+    this.tasks.on("remove-error", () => alert("Erro ao excluir"));
+    this.tasks.on("update-error", () => alert("Erro ao atualizar"));
+    this.tasks.on("remove", () => this.tasks.render());
+    this.tasks.on("update", () => this.tasks.render());
   }
-  taskFormEvents(self) {
-    self.taskForm.on("error", () => alert("Erro ao cadastrar tarefa"));
-    self.taskForm.on("submit", () => {
-      self.menu.render("tasks");
-      self.tasks.render();
+  taskFormEvents() {
+    this.taskForm.on("error", () => alert("Erro ao cadastrar tarefa"));
+    this.taskForm.on("submit", () => {
+      this.menu.render("tasks");
+      this.tasks.render();
     });
   }
-  userEvents(self) {
-    self.user.on("error", () => alert("Erro carregar usuário"));
-    self.user.on("remove-error", () => alert("Erro ao excluir conta"));
-    self.user.on("remove-account", () => {
+  userEvents() {
+    this.user.on("error", () => alert("Erro carregar usuário"));
+    this.user.on("remove-error", () => alert("Erro ao excluir conta"));
+    this.user.on("remove-account", () => {
       alert("Que pena! Sua conta foi excluída.");
       localStorage.clear();
-      self.menu.clear();
-      self.signin.render();
+      this.menu.clear();
+      this.signin.render();
     });
   }
-  menuEvents(self) {
-    self.menu.on("click", (path) => {
-      self.menu.render(path);
-      self[path].render();
+  menuEvents() {
+    this.menu.on("click", (path) => {
+      this.menu.render(path);
+      this[path].render();
     });
-    self.menu.on("logout", () => {
+    this.menu.on("logout", () => {
       localStorage.clear();
-      self.menu.clear();
-      self.signin.render();
+      this.menu.clear();
+      this.signin.render();
     })
   }
 }

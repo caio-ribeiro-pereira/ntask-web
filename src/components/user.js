@@ -8,47 +8,47 @@ class User extends NTask {
     this.body = body;
   }
   render() {
-    this.renderUserData(this);
+    this.renderUserData()
   }
   addEventListener() {
-    this.userCancelClick(this);
+    this.userCancelClick();
   }
-  renderUserData(self) {
+  renderUserData(){
     const opts = {
       method: "GET",
-      url: `${self.URL}/user`,
+      url: `${this.URL}/user`,
       json: true,
       headers: {
         authorization: localStorage.getItem("token")
       }
     };
-    self.body.innerHTML = Loading.render();
-    self.request(opts, (err, resp, data) => {
+    this.body.innerHTML = Loading.render();
+    this.request(opts, (err, resp, data) => {
       if (err || resp.status === 412) {
-        self.emit("error", err);
+        this.emit("error", err);
       } else {
-        self.body.innerHTML = Template.render(data);
-        self.addEventListener();
+        this.body.innerHTML = Template.render(data);
+        this.addEventListener();
       }
     });
   }
-  userCancelClick(self) {
-    const button = self.body.querySelector("[data-remove-account]");
+  userCancelClick() {
+    const button = this.body.querySelector("[data-remove-account]");
     button.addEventListener("click", (e) => {
       e.preventDefault();
       if (confirm("Tem certeza que deseja excluir sua conta?")) {
         const opts = {
           method: "DELETE",
-          url: `${self.URL}/user`,
+          url: `${this.URL}/user`,
           headers: {
             authorization: localStorage.getItem("token")
           }
         };
-        self.request(opts, (err, resp, data) => {
+        this.request(opts, (err, resp, data) => {
           if (err || resp.status === 412) {
-            self.emit("remove-error", err);
+            this.emit("remove-error", err);
           } else {
-            self.emit("remove-account");
+            this.emit("remove-account");
           }
         });
       }
