@@ -18,7 +18,7 @@ E tem mais no [package.json](https://github.com/caio-ribeiro-pereira/ntask-web/b
 ## Instalação
 
 * Clone o repositório: `git clone git@github.com:caio-ribeiro-pereira/ntask-web.git`
-* Acesse o diretório do projeto: `cd ntask-api`
+* Acesse o diretório do projeto: `cd ntask-web`
 * Instale as dependências: `npm install`
 * Inicie o servidor: `npm start`
 * Rodar testes: `npm test`
