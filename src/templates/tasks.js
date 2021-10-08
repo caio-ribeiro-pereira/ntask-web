@@ -1,17 +1,24 @@
 const renderTasks = tasks => {
   return tasks.map(task => {
-    let done = task.done ? "ios-checkmark" : "ios-circle-outline";
+    let doneIcon = 'ios-circle-outline';
+    let doneLabel = 'none';
+    if (task.done) {
+      doneIcon = 'ios-checkmark';
+      doneLabel = 'line-through';
+    }
     return `<li class="item item-icon-left item-button-right">
-      <i class="icon ion-${done}" data-done
+      <i class="icon ion-${doneIcon}" data-done
         data-task-done="${task.done ? 'done' : ''}"
         data-task-id="${task.id}"></i>
-      ${task.title}
+      <span style="text-decoration: ${doneLabel}">
+        ${task.title}
+      </span>
       <button data-remove data-task-id="${task.id}"
         class="button button-assertive">
         <i class="ion-trash-a"></i>
       </button>
     </li>`;
-  }).join("");
+  }).join('');
 };
 
 exports.render = tasks => {

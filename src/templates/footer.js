@@ -1,7 +1,7 @@
 exports.render = path => {
-  let isTasks = path === "tasks" ? "active" : "";
-  let isTaskForm = path === "taskForm" ? "active" : "";
-  let isUser = path === "user" ? "active" : "";
+  let isTasks = path === 'tasks' ? 'active' : '';
+  let isTaskForm = path === 'taskForm' ? 'active' : '';
+  let isUser = path === 'user' ? 'active' : '';
   return `
     <div class="tabs-striped tabs-color-calm">
       <div class="tabs">

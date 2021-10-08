@@ -1,49 +1,48 @@
-import NTask from "../ntask.js";
-import Template from "../templates/signin.js";
+const NTask = require('../ntask.js');
+const Template = require('../templates/signin.js');
 
 class Signin extends NTask {
   constructor(body) {
     super();
     this.body = body;
   }
+
   render() {
     this.body.innerHTML = Template.render();
-    this.body.querySelector("[data-email]").focus();
+    this.body.querySelector('[data-email]').focus();
     this.addEventListener();
   }
+
   addEventListener() {
-    this.formSubmit()
+    this.formSubmit();
     this.signupClick();
   }
+
   formSubmit() {
-    const form = this.body.querySelector("form");
-    form.addEventListener("submit", (e) => {
+    const form = this.body.querySelector('form');
+    
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const email = e.target.querySelector("[data-email]");
-      const password = e.target.querySelector("[data-password]");
-      const opts = {
-        method: "POST",
-        url: `${this.URL}/token`,
-        json: true,
-        body: {
-          email: email.value,
-          password: password.value
-        }
+      
+      const email = e.target.querySelector('[data-email]');
+      const password = e.target.querySelector('[data-password]');
+      const body = {
+        email: email.value,
+        password: password.value
       };
-      this.request(opts, (err, resp, data) => {
-        if (err || resp.status === 401) {
-          this.emit("error", err);
-        } else {
-          this.emit("signin", data.token);
-        }
-      });
+
+      this.request.post('/token', body)
+        .then(res => this.emit('signin', res.data.token))
+        .catch(err => this.emit('error', err))
+      ;
     });
   }
+
   signupClick() {
-    const signup = this.body.querySelector("[data-signup]");
-    signup.addEventListener("click", (e) => {
+    const signup = this.body.querySelector('[data-signup]');
+    signup.addEventListener('click', (e) => {
       e.preventDefault();
-      this.emit("signup");
+      this.emit('open_signup');
     });
   }
 }

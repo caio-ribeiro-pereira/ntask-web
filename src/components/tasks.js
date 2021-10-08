@@ -1,87 +1,61 @@
-import NTask from "../ntask.js";
-import Template from "../templates/tasks.js";
-import Loading from "../templates/loading.js";
+const NTask = require('../ntask.js');
+const Template = require('../templates/tasks.js');
 
 class Tasks extends NTask {
   constructor(body) {
     super();
     this.body = body;
   }
+
   render() {
-    this.renderTaskList()
+    this.renderTaskList();
   }
+
   addEventListener() {
     this.taskDoneCheckbox();
     this.taskRemoveClick();
   }
-  renderTaskList(){
-    const opts = {
-      method: "GET",
-      url: `${this.URL}/tasks`,
-      json: true,
-      headers: {
-        authorization: localStorage.getItem("token")
-      }
-    };
-    this.body.innerHTML = Loading.render();
-    this.request(opts, (err, resp, data) => {
-      if (err) {
-        this.emit("error", err);
-      } else {
-        this.body.innerHTML = Template.render(data);
+
+  renderTaskList() {
+    this.request.get('/tasks')
+      .then(res => {
+        this.body.innerHTML = Template.render(res.data);
         this.addEventListener();
-      }
-    });
+      })
+      .catch(err => this.emit('error', err))
+    ;
   }
+
   taskDoneCheckbox() {
-    const dones = this.body.querySelectorAll("[data-done]");
-    for(let i = 0, max = dones.length; i < max; i++) {
-      dones[i].addEventListener("click", (e) => {
+    const dones = this.body.querySelectorAll('[data-done]');
+
+    for(let i = 0; i < dones.length; i++) {
+      dones[i].addEventListener('click', (e) => {
         e.preventDefault();
-        const id = e.target.getAttribute("data-task-id");
-        const done = e.target.getAttribute("data-task-done");
-        const opts = {
-          method: "PUT",
-          url: `${this.URL}/tasks/${id}`,
-          headers: {
-            authorization: localStorage.getItem("token"),
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            done: !done
-          })
+        const id = e.target.getAttribute('data-task-id');
+        const done = e.target.getAttribute('data-task-done');
+        const body = {
+          done: !done
         };
-        this.request(opts, (err, resp, data) => {
-          if (err || resp.status === 412) {
-            this.emit("update-error", err);
-          } else {
-            this.emit("update");
-          }
-        });
+        this.request.put(`/tasks/${id}`, body)
+          .then(() => this.emit('update'))
+          .catch(err => this.emit('update-error', err))
+        ;
       });
     }
   }
+
   taskRemoveClick() {
-    const removes = this.body.querySelectorAll("[data-remove]");
-    for(let i = 0, max = removes.length; i < max; i++) {
-      removes[i].addEventListener("click", (e) => {
+    const removes = this.body.querySelectorAll('[data-remove]');
+    for(let i = 0; i < removes.length; i++) {
+      removes[i].addEventListener('click', (e) => {
         e.preventDefault();
-        if (confirm("Deseja excluir esta tarefa?")) {
-          const id = e.target.getAttribute("data-task-id");
-          const opts = {
-            method: "DELETE",
-            url: `${this.URL}/tasks/${id}`,
-            headers: {
-              authorization: localStorage.getItem("token")
-            }
-          };
-          this.request(opts, (err, resp, data) => {
-            if (err || resp.status === 412) {
-              this.emit("remove-error", err);
-            } else {
-              this.emit("remove");
-            }
-          });
+        if (confirm('Deseja excluir esta tarefa?')) {
+          const id = e.target.getAttribute('data-task-id');
+          this.request.delete(`/tasks/${id}`)
+            .then(() => this.emit('remove'))
+            .catch(err => this.emit('remove-error', err))
+          ;
         }
       });
     }

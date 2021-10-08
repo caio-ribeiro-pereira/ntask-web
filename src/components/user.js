@@ -1,56 +1,39 @@
-import NTask from "../ntask.js";
-import Template from "../templates/user.js";
-import Loading from "../templates/loading.js";
+const NTask = require('../ntask.js');
+const Template = require('../templates/user.js');
 
 class User extends NTask {
   constructor(body) {
     super();
     this.body = body;
   }
+
   render() {
-    this.renderUserData()
+    this.renderUserData();
   }
+
   addEventListener() {
     this.userCancelClick();
   }
-  renderUserData(){
-    const opts = {
-      method: "GET",
-      url: `${this.URL}/user`,
-      json: true,
-      headers: {
-        authorization: localStorage.getItem("token")
-      }
-    };
-    this.body.innerHTML = Loading.render();
-    this.request(opts, (err, resp, data) => {
-      if (err || resp.status === 412) {
-        this.emit("error", err);
-      } else {
-        this.body.innerHTML = Template.render(data);
+
+  renderUserData() {
+    this.request.get('/user')
+      .then(res => {
+        this.body.innerHTML = Template.render(res.data);
         this.addEventListener();
-      }
-    });
+      })
+      .catch(err => this.emit('error', err))
+    ;
   }
+
   userCancelClick() {
-    const button = this.body.querySelector("[data-remove-account]");
-    button.addEventListener("click", (e) => {
+    const btn = this.body.querySelector('[data-remove-account]');
+    btn.addEventListener('click', (e) => {
       e.preventDefault();
-      if (confirm("Tem certeza que deseja excluir sua conta?")) {
-        const opts = {
-          method: "DELETE",
-          url: `${this.URL}/user`,
-          headers: {
-            authorization: localStorage.getItem("token")
-          }
-        };
-        this.request(opts, (err, resp, data) => {
-          if (err || resp.status === 412) {
-            this.emit("remove-error", err);
-          } else {
-            this.emit("remove-account");
-          }
-        });
+      if (confirm('Tem certeza que deseja excluir sua conta?')) {
+        this.request.delete('/user')
+          .then(() => this.emit('remove-account'))
+          .catch(() => this.emit('remove-error', err))
+        ;
       }
     });
   }

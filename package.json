@@ -1,21 +1,18 @@
 {
   "name": "ntask-web",
   "version": "1.0.0",
-  "description": "Versão web do gerenciador de tarefas",
+  "description": "Gerenciador de tarefas",
+  "main": "index.js",
   "scripts": {
     "start": "npm run build && npm run server",
     "server": "http-server public -p 3001",
-    "build": "npm run browserify && npm run uglify",
-    "browserify": "browserify src -t babelify -o public/js/app.js",
-    "uglify": "uglify -s public/js/app.js -o public/js/app.min.js"
+    "build": "browserify src -o public/js/app.js"
   },
-  "author": "Caio Ribeiro Pereira",
+  "author": "Caio R. Pereira",
   "dependencies": {
-    "babelify": "^6.3.0",
-    "browser-request": "^0.3.3",
-    "browserify": "^11.2.0",
-    "http-server": "^0.8.4",
-    "tiny-emitter": "^1.0.0",
-    "uglify": "^0.1.5"
+    "axios": "^0.22.0",
+    "browserify": "^17.0.0",
+    "http-server": "^13.0.2",
+    "tiny-emitter": "^2.1.0"
   }
 }
